@@ -18,29 +18,33 @@ public class ArrayStorage {
 
         if (isFull()) {
             System.out.println("Storage resume crowded");
-        } else if (isExists(storage, r)) {
             return;
+        } else if (find(r.getUuid()) >= 0) {
+            System.out.println("This resume is already exists");
+            return;
+        } else {
+            storage[size] = r;
+            size++;
         }
-        storage[size] = r;
-        size++;
     }
 
     public Resume get(String uuid) {
-        if(exists(uuid)) {
-            for (int i = 0; i < size; i++) {
-                return storage[i];
-            }
-        }
+        if (find(uuid) >= 0) {
+            return storage[find(uuid)];
+        } else {
+            System.out.println("Resume with uuid " + uuid + " don't find");
             return null;
+        }
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (exists(uuid)) {
-                storage[i] = storage[size - 1];
-                size--;
-                return;
-            }
+        if (find(uuid) >= 0) {
+            System.out.println("del" + find(uuid));
+            storage[find(uuid)] = storage[size - 1];
+            size--;
+            return;
+        } else {
+            System.out.println("Resume with uuid " + uuid + " don't find");
         }
     }
 
@@ -51,8 +55,8 @@ public class ArrayStorage {
 
         Resume[] resumes = new Resume[size];
         for (int i = 0; i < size; i++) {
-            if(storage[i] != null)
-            resumes[i] = storage[i];
+            if (storage[i] != null)
+                resumes[i] = storage[i];
         }
         return resumes;
     }
@@ -79,13 +83,14 @@ public class ArrayStorage {
         return false;
     }
 
-    private boolean exists(String uuidFound) {
+    private int find(String uuidFound) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuidFound)) {
-                return true;
+                System.out.println("резюме найдено");
+                return i;
             }
         }
-        System.out.print("Resume don't find  ");
-        return false;
+        System.out.println("резюме не найдено");
+        return -1;
     }
 }
