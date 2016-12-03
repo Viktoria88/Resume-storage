@@ -3,7 +3,7 @@
  */
 public class ArrayStorage {
     final int maxSize = 10000;
-    Resume[] storage = new Resume[maxSize];
+    private Resume[] storage = new Resume[maxSize];
     private int size = 0;
 
     public void clear() {
@@ -25,6 +25,16 @@ public class ArrayStorage {
         } else {
             storage[size] = r;
             size++;
+        }
+    }
+
+    public void update(Resume r){
+        if (find(r.getUuid()) < 0){
+            System.out.println("Resume with uuid " + r.getUuid() + " don't find");
+        } else {
+            System.out.println("Enter your updating");
+            storage[find(r.getUuid())] = r;
+            return;
         }
     }
 
@@ -73,24 +83,22 @@ public class ArrayStorage {
         }
     }
 
-    private boolean isExists(Resume[] re, Resume r) {
-        for (int i = 0; i < size; i++) {
-            if (re[i].getUuid().equals(r.getUuid())) {
-                System.out.println("This resume is already exists");
-                return true;
-            }
-        }
-        return false;
-    }
+//    private boolean isExists(Resume[] re, Resume r) {
+//        for (int i = 0; i < size; i++) {
+//            if (re[i].getUuid().equals(r.getUuid())) {
+//                System.out.println("This resume is already exists");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     private int find(String uuidFound) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuidFound)) {
-                System.out.println("резюме найдено");
                 return i;
             }
         }
-        System.out.println("резюме не найдено");
         return -1;
     }
 }
