@@ -1,3 +1,7 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
@@ -30,7 +34,7 @@ public class ArrayStorage {
 
     public void update(Resume r){
         if (find(r.getUuid()) < 0){
-            System.out.println("Resume with uuid " + r.getUuid() + " don't find");
+            System.out.println("com.urise.webapp.model.Resume with uuid " + r.getUuid() + " don't find");
         } else {
             System.out.println("Enter your updating");
             storage[find(r.getUuid())] = r;
@@ -42,7 +46,7 @@ public class ArrayStorage {
         if (find(uuid) >= 0) {
             return storage[find(uuid)];
         } else {
-            System.out.println("Resume with uuid " + uuid + " don't find");
+            System.out.println("com.urise.webapp.model.Resume with uuid " + uuid + " don't find");
             return null;
         }
     }
@@ -54,7 +58,7 @@ public class ArrayStorage {
             size--;
             return;
         } else {
-            System.out.println("Resume with uuid " + uuid + " don't find");
+            System.out.println("com.urise.webapp.model.Resume with uuid " + uuid + " don't find");
         }
     }
 
