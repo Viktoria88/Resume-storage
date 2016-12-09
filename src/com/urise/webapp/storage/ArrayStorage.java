@@ -7,9 +7,10 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    final int maxSize = 10000;
-    private Resume[] storage = new Resume[maxSize];
+public class ArrayStorage implements Storage {
+
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -56,7 +57,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int index = find(uuid);
         if (index >= 0) {
-            System.out.println("del" + find(uuid));
+            System.out.println("del" + index);
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
@@ -80,7 +81,7 @@ public class ArrayStorage {
     }
 
     private boolean isFull() {
-        if (size == maxSize) {
+        if (size == STORAGE_LIMIT) {
             return true;
         } else {
             return false;
