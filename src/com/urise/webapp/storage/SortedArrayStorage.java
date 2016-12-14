@@ -8,35 +8,13 @@ import java.util.Arrays;
  * Created by viktoriyasidenko on 12/13/16.
  */
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void clear() {
 
-    }
-
-    @Override
-    public void save(Resume r) {
-
-    }
-
-    @Override
-    public void update(Resume r) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
-    }
-
-    @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
 
     @Override
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
+        Arrays.sort(storage, 0, size);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 }
