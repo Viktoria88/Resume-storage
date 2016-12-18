@@ -14,7 +14,23 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected int getIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
-        Arrays.sort(storage, 0, size);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
+
+    protected void insertElement(Resume r, int index){
+
+        int indexX = - index - 1;
+        int numberCopy = size - indexX;
+            System.arraycopy(storage, indexX, storage, indexX + 1, numberCopy);
+            storage[indexX] = r;
+    }
+
+    protected void fillDeletedElement(int index){
+
+        int numberCopy = size - index - 1;
+        if(numberCopy > 0) {
+            System.arraycopy(storage, index + 1, storage, index, numberCopy);
+        }
+    }
+
 }
