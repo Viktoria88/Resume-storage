@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -26,55 +26,13 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void save(Resume r) {
-
-        int index = getIndex(r.getUuid());
+    @Override
+    protected void doSave(Resume r, Object index) {
         if (isFull()) {
             throw new StorageException("Storage overflow", r.getUuid());
-        } else if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
         } else {
-            insertElement(r, index);
+            insertElement(r, (Integer) index);
             size++;
-        }
-    }
-
-    public void update(Resume r){
-        int index = getIndex(r.getUuid());
-        if (index < 0){
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            System.out.println("Enter your updating");
-            storage[index] = r;
-            return;
-        }
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            System.out.println("Resume with uuid " + uuid + " will be deleted");
-            fillDeletedElement(index);
-            storage[size - 1] = null;
-            size--;
-            return;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    public Resume[] getAll() {
-
-        return Arrays.copyOfRange(storage, 0, size);
-
-    }
-
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        } else {
-            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -86,7 +44,36 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract int getIndex(String uuid);
+    @Override
+    protected void doUpdate(Resume r, Object index) {
+        storage[(Integer) index] = r;
+
+    }
+
+    @Override
+    public void doDelete(Object index) {
+            fillDeletedElement((Integer) index);
+            storage[size - 1] = null;
+            size--;
+    }
+
+    public Resume[] getAll() {
+
+        return Arrays.copyOfRange(storage, 0, size);
+
+    }
+
+    @Override
+    public Resume doGet(Object index) {
+            return storage[(Integer) index];
+    }
+
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
+    }
+
+    protected abstract Integer getSearchKey(String uuid);
 
     protected abstract void insertElement(Resume r, int index);
 

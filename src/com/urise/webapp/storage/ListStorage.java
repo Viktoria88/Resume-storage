@@ -1,71 +1,62 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by viktoriyasidenko on 1/27/17.
+ * Created by viktoriyasidenko on 2/9/17.
  */
 public class ListStorage extends AbstractStorage {
 
-    protected TreeSet<String> storage = new TreeSet<>();
-
-    public void clear(){
-        storage.clear();
+    private List<Resume> list = new ArrayList();
+    @Override
+    public void clear() {
+        list.clear();
     }
 
-    public void save(Resume r){
-        if(usedKey(r.getUuid())){
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            storage.add(r.getUuid());
-        }
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        list.set((Integer) searchKey, r);
     }
 
-    protected boolean usedKey(String uuid){
-        for (String r : storage) {
-            uuid.equals(r);
-        }
-        return true;
+    @Override
+    protected void doSave(Resume r, Object searchKey) {
+        list.add(r);
     }
 
-    public void update(Resume r){
-        if(!usedKey(r.getUuid())){
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage.add(r.getUuid());
-        }
+    @Override
+    public Resume[] getAll() {
+        return list.toArray(new Resume[list.size()]);
     }
 
-    public Resume get(String uuid) {
-        if (!usedKey(uuid)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            for (String r : storage) {
-//                return r;
-            }
+    @Override
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    protected void doDelete(Object searchKey) {
+        list.remove(((Integer) searchKey).intValue());
+    }
+
+    @Override
+    protected Resume doGet(Object searchKey) {
+        return list.get((Integer) searchKey);
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
+    protected Object getSearchKey(String uuid) {
+        for (int i = 0; i < list.size(); i++){
+            if(list.get(i).getUuid().equals(uuid))
+                return i;
         }
         return null;
     }
-
-    public void delete(String uuid){
-        if (!usedKey(uuid)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            storage.remove(uuid);
-        }
-    }
-
-    public Resume[] getAll(){
-        return null;
-    }
-
-    public int size(){
-        return storage.size();
-    }
-
-
 }
