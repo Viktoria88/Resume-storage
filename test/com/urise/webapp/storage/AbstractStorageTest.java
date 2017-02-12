@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by viktoriyasidenko on 12/26/16.
  */
-public abstract class AbstractArrayStorageTest {
+public abstract class AbstractStorageTest {
 
     private Storage storage;
 
@@ -33,7 +33,7 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUM_4 = new Resume(UUID_4);
 
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
