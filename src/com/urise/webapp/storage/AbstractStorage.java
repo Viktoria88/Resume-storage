@@ -4,6 +4,9 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by viktoriyasidenko on 1/27/17.
  */
@@ -21,6 +24,8 @@ public abstract class AbstractStorage implements Storage{
     protected abstract boolean isExist(Object searchKey);
 
     protected abstract Object getSearchKey(String uuid);
+
+    protected abstract List<Resume> doGetAllSorted();
 
     public void save(Resume r){
         Object searchKey = getNotExistedSearchKey(r.getUuid());
@@ -57,4 +62,9 @@ public abstract class AbstractStorage implements Storage{
         }
         return searchKey;
     }
+
+    public List<Resume> getAllSorted(){
+        return doGetAllSorted();
+    }
+
 }

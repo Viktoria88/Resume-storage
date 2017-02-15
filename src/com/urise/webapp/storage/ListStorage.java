@@ -3,6 +3,8 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -59,4 +61,13 @@ public class ListStorage extends AbstractStorage {
         }
         return null;
     }
+
+    @Override
+    protected List<Resume> doGetAllSorted() {
+//        return Collections.sort(list, RESUME_COMPARATOR);
+        return null;
+    }
+
+    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getFullName().compareTo(o2.getFullName());
+
 }
