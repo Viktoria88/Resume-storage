@@ -5,6 +5,7 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,63 +13,62 @@ import java.util.Map;
  */
 public class MapStorage extends AbstractStorage {
 
-    protected Map<String, Resume> storage = new HashMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
-    public void clear(){
+    public void clear() {
         storage.clear();
     }
 
-    public void save(Resume r){
-        if(!usedKey(r.getUuid())){
-            throw new ExistStorageException(r.getUuid());
-        } else {
-            storage.put(r.getUuid(), r);
-        }
+    @Override
+    protected void doUpdate(Resume r, Object searchKey) {
+        storage.put(r.getUuid(), r);
     }
 
-    protected boolean usedKey(String uuid){
+    @Override
+    protected void doSave(Resume r, Object searchKey) {
+        storage.put(r.getUuid(), r);
+    }
+
+    @Override
+    protected void doDelete(Object searchKey) {
+        storage.remove(searchKey);
+    }
+
+    @Override
+    protected Resume doGet(Object searchKey) {
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
+            return entry.getValue();
+        }
+        return null;
+    }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return searchKey != null;
+    }
+
+    @Override
+    protected String getSearchKey(String uuid) {
         for (Map.Entry<String, Resume> entry : storage.entrySet()) {
             uuid.equals(entry.getKey());
-        }
-        return true;
-    }
-
-    public void update(Resume r){
-        if(!usedKey(r.getUuid())){
-            throw new NotExistStorageException(r.getUuid());
-        } else {
-            storage.put(r.getUuid(), r);
-        }
-    }
-
-    public Resume get(String uuid) {
-        if (!usedKey(uuid)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-                return entry.getValue();
-            }
+            return entry.getKey();
         }
         return null;
     }
 
-    public void delete(String uuid){
-        if (!usedKey(uuid)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            storage.remove(uuid);
-        }
-    }
-
-    public Resume[] getAll(){
-//        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
+    protected List<Resume> doGetAllSorted(){
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
 //            return (Map<String, Resume>)entry;
-//        }
+        }
+        return null;
+    }
+    public Resume[] getAll() {
         return null;
     }
 
-    public int size(){
-        return storage.size();
-    }
 
+    @Override
+    public int size() {
+        return 0;
+    }
 }
