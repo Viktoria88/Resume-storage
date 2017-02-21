@@ -8,21 +8,11 @@ import org.junit.Test;
 /**
  * Created by viktoriyasidenko on 12/26/16.
  */
-public class SortedArrayStorageTest extends AbstractStorageTest {
+public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
     public SortedArrayStorageTest() {
         super(new ArrayStorage());
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
-        try {
-            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail();
-        }
-        storage.save(new Resume());
-    }
+
 }
