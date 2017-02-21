@@ -4,71 +4,55 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by viktoriyasidenko on 1/27/17.
  */
 public class MapStorage extends AbstractStorage {
 
-    private Map<String, Resume> storage = new HashMap<>();
+    private Map<String, Resume> map = new HashMap<>();
 
     public void clear() {
-        storage.clear();
+        map.clear();
     }
 
     @Override
-    protected void doUpdate(Resume r, Object searchKey) {
-        storage.put(r.getUuid(), r);
+    protected void doUpdate(Resume r, Object uuid) {
+        map.put((String) uuid, r);
     }
 
     @Override
-    protected void doSave(Resume r, Object searchKey) {
-        storage.put(r.getUuid(), r);
+    protected void doSave(Resume r, Object uuid) {
+        map.put((String) uuid, r);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        storage.remove(searchKey);
+    protected void doDelete(Object uuid) {
+        map.remove((String) uuid);
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            return entry.getValue();
-        }
-        return null;
+    protected Resume doGet(Object uuid) {
+        return map.get((String) uuid);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+    protected boolean isExist(Object uuid) {
+        return map.containsKey((String) uuid);
     }
 
     @Override
     protected String getSearchKey(String uuid) {
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            uuid.equals(entry.getKey());
-            return entry.getKey();
-        }
-        return null;
+        return uuid;
     }
 
-    protected List<Resume> doGetAllSorted(){
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-//            return (Map<String, Resume>)entry;
-        }
-        return null;
+    protected List<Resume> doCopyAll(){
+        return new ArrayList<>(map.values());
     }
-    public Resume[] getAll() {
-        return null;
-    }
-
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 }
