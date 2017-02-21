@@ -29,11 +29,6 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return list.toArray(new Resume[list.size()]);
-    }
-
-    @Override
     public int size() {
         return list.size();
     }
@@ -63,11 +58,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> doGetAllSorted() {
-//        return Collections.sort(list, RESUME_COMPARATOR);
-        return null;
+    protected List<Resume> doCopyAll() {
+        return new ArrayList<>(list);
     }
-
-    private static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getFullName().compareTo(o2.getFullName());
 
 }

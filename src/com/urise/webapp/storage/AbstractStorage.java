@@ -25,7 +25,7 @@ public abstract class AbstractStorage implements Storage{
 
     protected abstract Object getSearchKey(String uuid);
 
-    protected abstract List<Resume> doGetAllSorted();
+    protected abstract List<Resume> doCopyAll();
 
     public void save(Resume r){
         Object searchKey = getNotExistedSearchKey(r.getUuid());
@@ -64,7 +64,9 @@ public abstract class AbstractStorage implements Storage{
     }
 
     public List<Resume> getAllSorted(){
-        return doGetAllSorted();
+        List<Resume> list = doCopyAll();
+        Collections.sort(list);
+        return list;
     }
 
 }
