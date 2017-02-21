@@ -1,15 +1,16 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by viktoriyasidenko on 1/27/17.
  */
-public class MapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
 
     private Map<String, Resume> map = new HashMap<>();
 
@@ -18,33 +19,33 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume r, Object uuid) {
-        map.put((String) uuid, r);
+    protected void doUpdate(Resume r, Object resume) {
+        map.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doSave(Resume r, Object uuid) {
-        map.put((String) uuid, r);
+    protected void doSave(Resume r, Object resume) {
+        map.put(r.getUuid(), r);
     }
 
     @Override
-    protected void doDelete(Object uuid) {
-        map.remove((String) uuid);
+    protected void doDelete(Object resume) {
+        map.remove(((Resume) resume).getUuid());
     }
 
     @Override
-    protected Resume doGet(Object uuid) {
-        return map.get((String) uuid);
+    protected Resume doGet(Object resume) {
+        return (Resume) resume;
     }
 
     @Override
-    protected boolean isExist(Object uuid) {
-        return map.containsKey((String) uuid);
+    protected boolean isExist(Object resume) {
+        return resume != null;
     }
 
     @Override
-    protected String getSearchKey(String uuid) {
-        return uuid;
+    protected Resume getSearchKey(String uuid) {
+        return map.get(uuid);
     }
 
     protected List<Resume> doCopyAll(){
