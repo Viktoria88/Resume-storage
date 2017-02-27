@@ -1,15 +1,34 @@
 package com.urise.webapp;
 
+import com.urise.webapp.model.SectionType;
+
 /**
  * Created by viktoriyasidenko on 2/24/17.
  */
 public class TestSingleton {
-    private static TestSingleton ourInstance = new TestSingleton();
+    private static TestSingleton instance = new TestSingleton();
 
     public static TestSingleton getInstance() {
-        return ourInstance;
+//        if (instance == null) {
+//            instance == new TestSingleton();
+//        }
+        return instance;
     }
 
     private TestSingleton() {
+    }
+
+    public static void main(String[] args) {
+        TestSingleton.getInstance().toString();
+        Sinngleton instance = Sinngleton.valueOf("INSTANCE");
+        System.out.println(instance.name());
+        System.out.println(instance.ordinal());
+        for (SectionType type: SectionType.values()){
+            System.out.println(type.getTitle());
+        }
+    }
+
+    public enum Sinngleton{
+        INSTANCE
     }
 }
