@@ -2,7 +2,6 @@ package com.urise.webapp;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -16,6 +15,7 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException("Error", e);
         }
+
         File dir = new File("./src/com/urise/webapp");
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
@@ -29,5 +29,34 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+//        File project = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
+//        String[] pack = project.list();
+//        if(pack != null){
+//            for (String name : pack){
+//                System.out.println(name);
+//                return name;
+//            }
+//        }
+//        return;
+//
+
     }
+
+
+//    public static File recursive (){
+//        File project = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
+//        String[] pack = project.list();
+//
+//        if(namePackage.isDirectory()){
+//            String[] direct = namePackage.list();
+//            if (direct != null){
+//                for (String name : direct){
+//                    System.out.println(name);
+//                    return namePackage;
+//                }
+//            }
+//        }
+//        return project;
+//    }
 }
