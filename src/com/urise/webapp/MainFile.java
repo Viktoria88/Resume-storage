@@ -16,7 +16,7 @@ public class MainFile {
             throw new RuntimeException("Error", e);
         }
 
-        File dir = new File("./src/com/urise/webapp");
+        File dir = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
         if (list != null) {
@@ -24,39 +24,31 @@ public class MainFile {
                 System.out.println(name);
             }
         }
-        try(FileInputStream fis = new FileInputStream(filePath)) {
+        try (FileInputStream fis = new FileInputStream(filePath)) {
             System.out.println(fis.read());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-//        File project = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
-//        String[] pack = project.list();
-//        if(pack != null){
-//            for (String name : pack){
-//                System.out.println(name);
-//                return name;
-//            }
-//        }
-//        return;
-//
+        System.out.println("printDirectoryRecursion");
+        printDirectoryRecursion(dir);
 
     }
 
+    public static void printDirectoryRecursion(File dir) {
 
-//    public static File recursive (){
-//        File project = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
-//        String[] pack = project.list();
-//
-//        if(namePackage.isDirectory()){
-//            String[] direct = namePackage.list();
-//            if (direct != null){
-//                for (String name : direct){
-//                    System.out.println(name);
-//                    return namePackage;
-//                }
-//            }
-//        }
-//        return project;
-//    }
+        File[] files = dir.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println("     File: " + file.getName());
+                } else if (file.isDirectory()) {
+                    System.out.println("Directory: " + file.getName());
+                    printDirectoryRecursion(file);
+                }
+            }
+        }
+
+    }
 }
