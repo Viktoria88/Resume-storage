@@ -6,6 +6,7 @@ import com.urise.webapp.model.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,8 @@ import static org.junit.Assert.*;
  * Created by viktoriyasidenko on 12/26/16.
  */
 public abstract class AbstractStorageTest {
+
+    protected static final File STORAGE_DIR = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
 
     protected Storage storage;
 
@@ -105,7 +108,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume newResume = new Resume(UUID_1, "New Name");
         storage.update(newResume);
-        assertTrue(newResume == storage.get(UUID_1));
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -115,9 +118,9 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
-        storage.delete(UUID_2);
+        storage.delete(UUID_1);
         assertSize(2);
-        storage.get(UUID_2);
+        storage.get(UUID_1);
     }
 
     @Test(expected = NotExistStorageException.class)
