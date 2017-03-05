@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by viktoriyasidenko on 3/1/17.
@@ -33,75 +35,75 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
     @Override
     public void clear() {
-        try {
-            Files.list(directory).forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error ", null);
-        }
+            getFilesList().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
-        try {
-            Files.size(directory);
-        } catch (IOException e) {
-            throw new StorageException("Directory read error", null);
-        }
-        return size();
+        return (int) getFilesList().count();
     }
 
     @Override
-    protected void doUpdate(Resume r, Path Path) {
+    protected void doUpdate(Resume r, Path path) {
         try {
-            doWrite(r, new BufferedOutputStream(Files.newOutputStream(directory)));
+            doWrite(r, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
-            throw new StorageException("Path write error", directory.getFileName().toString(), e);
+            throw new StorageException("Path write error", getFileName(path), e);
         }
     }
 
     @Override
-    protected void doSave(Resume r, Path Path) {
+    protected void doSave(Resume r, Path path) {
         try {
-            Files.createFile(directory);
+            Files.createFile(path);
         } catch (IOException e) {
-            throw new StorageException("Couldn't create Path ", directory.getFileName().toString(), e);
+            throw new StorageException("Couldn't create path " + getFileName(path), e);
         }
-        doUpdate(r, directory);
+        doUpdate(r, path);
     }
 
     @Override
-    protected void doDelete(Path Path) {
+    protected void doDelete(Path path) {
         try {
-            Files.delete(directory);
+            Files.delete(path);
         } catch (IOException e) {
-           throw new StorageException("Path delete error", directory.getFileName().toString());
-        }
-    }
-
-    @Override
-    protected Resume doGet(Path Path) {
-        try {
-            return doRead(new BufferedInputStream(Files.newInputStream(directory)));
-        } catch (IOException e) {
-            throw new StorageException("Path read error ", directory.getFileName().toString(), e);
+           throw new StorageException("Path delete error", getFileName(path), e);
         }
     }
 
     @Override
-    protected boolean isExist(Path Path) {
-        return Files.exists(directory);
+    protected Resume doGet(Path path) {
+        try {
+            return doRead(new BufferedInputStream(Files.newInputStream(path)));
+        } catch (IOException e) {
+            throw new StorageException("Path read error ", getFileName(path), e);
+        }
+    }
+
+    @Override
+    protected boolean isExist(Path path) {
+        return Files.isRegularFile(path);
     }
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return null; //Files.getAttribute(directory, uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
     protected List<Resume> doCopyAll() {
+       return getFilesList().map(this::doGet).collect(Collectors.toList());
+    }
 
-//        Path[] list = new Path[];
-//        Files.copy(directory, list);
-        return null;
+    private String getFileName(Path path){
+        return path.getFileName().toString();
+    }
+
+    private Stream<Path> getFilesList(){
+        try {
+            return Files.list(directory);
+        } catch (IOException e) {
+            throw new StorageException("Path read error ", e);
+        }
     }
 }
