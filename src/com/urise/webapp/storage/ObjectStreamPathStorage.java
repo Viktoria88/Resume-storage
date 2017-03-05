@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * Created by viktoriyasidenko on 3/3/17.
  */
-public class ObjectStreamPathStorage extends AbstractPathStorage {
+public class ObjectStreamPathStorage extends PathStorage {
     protected ObjectStreamPathStorage(String directory) {
         super(directory);
     }
