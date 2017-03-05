@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage");
+    protected static final File STORAGE_DIR = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage/storage");
 
     protected Storage storage;
 
