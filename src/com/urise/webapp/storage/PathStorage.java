@@ -29,7 +29,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
         this.streamSerialization = streamSerialization;
         directory = Paths.get(dir);
-        if(!Files.isDirectory(directory) || Files.isWritable(directory)){
+        if(!Files.isDirectory(directory) || !Files.isWritable(directory)){
             throw new IllegalArgumentException(dir + "is not directory or is not writable");
         }
     }

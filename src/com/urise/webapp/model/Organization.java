@@ -1,7 +1,11 @@
 package com.urise.webapp.model;
 
 import com.urise.webapp.util.DateUtil;
+import com.urise.webapp.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
@@ -13,12 +17,15 @@ import static com.urise.webapp.util.DateUtil.of;
 /**
  * Created by viktoriyasidenko on 2/28/17.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Organization implements Serializable {
 
-    private final Link homePage;
+    private Link homePage;
     private List<DescriptTypeForOrganisation> positions = new ArrayList<>();
 
-
+    public Organization() {
+    }
 
     public Organization(String name, String url, DescriptTypeForOrganisation... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -34,18 +41,14 @@ public class Organization implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Organization that = (Organization) o;
-
-        if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
-        return positions.equals(that.positions);
+        return Objects.equals(homePage, that.homePage) &&
+                Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        int result = homePage != null ? homePage.hashCode() : 0;
-        result = 31 * result + positions.hashCode();
-        return result;
+        return Objects.hash(homePage, positions);
     }
 
     @Override
@@ -56,14 +59,20 @@ public class Organization implements Serializable {
     /**
      * Created by viktoriyasidenko on 3/1/17.
      */
-    public static class DescriptTypeForOrganisation implements Serializable {
+    @XmlAccessorType(XmlAccessType.FIELD)
 
+    public static class DescriptTypeForOrganisation implements Serializable {
         private static final long serialVersionUID = 1L;
 
-        private final LocalDate startDate;
-        private final LocalDate endDate;
-        private final String title;
-        private final String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+        private String title;
+        private String description;
+
+        public DescriptTypeForOrganisation() {
+        }
 
         public DescriptTypeForOrganisation(int startYear, Month startMonth, String title, String description){
             this(of(startYear, startMonth), NOW, title, description);
@@ -102,22 +111,16 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
             DescriptTypeForOrganisation that = (DescriptTypeForOrganisation) o;
-
-            if (!startDate.equals(that.startDate)) return false;
-            if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
-            if (!title.equals(that.title)) return false;
-            return description.equals(that.description);
+            return Objects.equals(startDate, that.startDate) &&
+                    Objects.equals(endDate, that.endDate) &&
+                    Objects.equals(title, that.title) &&
+                    Objects.equals(description, that.description);
         }
 
         @Override
         public int hashCode() {
-            int result = startDate.hashCode();
-            result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
-            result = 31 * result + title.hashCode();
-            result = 31 * result + description.hashCode();
-            return result;
+            return Objects.hash(startDate, endDate, title, description);
         }
 
         @Override
