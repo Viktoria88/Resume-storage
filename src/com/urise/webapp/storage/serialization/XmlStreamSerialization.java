@@ -28,7 +28,7 @@ public class XmlStreamSerialization implements StreamSerialization{
     @Override
     public Resume doRead(InputStream is) throws IOException{
         try(Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)){
-            xmlParser.unmarshall(r);
+            return xmlParser.unmarshall(r);
         }
     }
 }
