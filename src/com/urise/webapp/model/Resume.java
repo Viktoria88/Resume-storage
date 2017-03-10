@@ -86,6 +86,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         return fullName;
     }
 
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
+
     @Override
     public int compareTo(Resume o) {
         int cmp = fullName.compareTo(o.fullName);
