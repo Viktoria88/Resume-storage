@@ -10,6 +10,7 @@ public class MainConcurrency {
 
     private static int counter;
     private static final Object LOCK = new Object();
+    private static final Object DEAD_LOCK = new Object();
     private static final int THREADS_NUMBER = 10000;
 
 
@@ -19,7 +20,7 @@ public class MainConcurrency {
             @Override
             public void run() {
                 System.out.println(getName() + ", " + getState());
-                throw new IllegalStateException();
+//                throw new IllegalStateException();
             }
         };
         thread0.start();
@@ -67,6 +68,33 @@ public class MainConcurrency {
         System.out.println(counter);
 
         new MainConcurrency().inc();
+
+        Thread t1 = new Thread(){
+            @Override
+            public void run(){
+                synchronized (LOCK){
+                    Thread.yield();
+                    synchronized (DEAD_LOCK){
+                        System.out.println("Success!");
+                    }
+                }
+            }
+        };
+
+        Thread t2 = new Thread(){
+            @Override
+            public void run(){
+                synchronized (DEAD_LOCK){
+                    Thread.yield();
+                    synchronized (LOCK){
+                        System.out.println("Success!");
+                    }
+                }
+            }
+        };
+
+        t1.start();
+        t2.start();
     }
 
 //    private static synchronized void inc(){
