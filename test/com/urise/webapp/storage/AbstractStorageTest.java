@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.*;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage/storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir(); //new File("/Users/viktoriyasidenko/Documents/Projects/U-RiseLvl2/TestTask/resume-storage/storage");//
 
     protected Storage storage;
 

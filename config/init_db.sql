@@ -18,4 +18,3 @@ CREATE UNIQUE INDEX contact_uuid_type_index ON contact (resume_uuid, type);
 
 
 
-
