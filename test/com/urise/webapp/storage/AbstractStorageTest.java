@@ -39,33 +39,33 @@ public abstract class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
-        R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
-        R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
-        R1.addSection(SectionType.QUALIFICATION, new ListSection("Java", "SQL", "JavaScript"));
-        R1.addSection(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Organization11", "http://Organization11.ua",
-                                new Organization.DescriptTypeForOrganisation(2005, Month.JANUARY, "position1", "content1"),
-                                new Organization.DescriptTypeForOrganisation(2001, Month.AUGUST, 2005, Month.JANUARY, "position2", "content2"))));
-        R1.addSection(SectionType.EDUCATION,
-                new OrganizationSection(
-                        new Organization("University", null,
-                                new Organization.DescriptTypeForOrganisation(1996, Month.JANUARY, 2000, Month.DECEMBER, "student", null),
-                                new Organization.DescriptTypeForOrganisation(2001, Month.APRIL, 2005, Month.DECEMBER, "aspirant", "economic")),
-                        new Organization("Organization12", "http://Organization12.ua")));
-
-        R1.addContact(ContactType.SKYPE, "skype2");
-        R1.addContact(ContactType.PHONE, "1233456");
-
-        R1.addSection(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Organization2", "http://Organization2.ua",
-                                new Organization.DescriptTypeForOrganisation(2014, Month.JANUARY, "position11", "content11"))));
-
-        R2.addContact(ContactType.HOME_PHONE, "757939347");
-        R2.addContact(ContactType.MAIL, "mail");
-
+//        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective"));
+//        R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
+//        R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
+//        R1.addSection(SectionType.QUALIFICATION, new ListSection("Java", "SQL", "JavaScript"));
+//        R1.addSection(SectionType.EXPERIENCE,
+//                new OrganizationSection(
+//                        new Organization("Organization11", "http://Organization11.ua",
+//                                new Organization.DescriptTypeForOrganisation(2005, Month.JANUARY, "position1", "content1"),
+//                                new Organization.DescriptTypeForOrganisation(2001, Month.AUGUST, 2005, Month.JANUARY, "position2", "content2"))));
+//        R1.addSection(SectionType.EDUCATION,
+//                new OrganizationSection(
+//                        new Organization("University", null,
+//                                new Organization.DescriptTypeForOrganisation(1996, Month.JANUARY, 2000, Month.DECEMBER, "student", null),
+//                                new Organization.DescriptTypeForOrganisation(2001, Month.APRIL, 2005, Month.DECEMBER, "aspirant", "economic")),
+//                        new Organization("Organization12", "http://Organization12.ua")));
+//
+//        R1.addContact(ContactType.SKYPE, "skype2");
+//        R1.addContact(ContactType.PHONE, "1233456");
+//
+//        R1.addSection(SectionType.EXPERIENCE,
+//                new OrganizationSection(
+//                        new Organization("Organization2", "http://Organization2.ua",
+//                                new Organization.DescriptTypeForOrganisation(2014, Month.JANUARY, "position11", "content11"))));
+//
+//        R2.addContact(ContactType.HOME_PHONE, "757939347");
+//        R2.addContact(ContactType.MAIL, "mail");
+//
 
     }
 
