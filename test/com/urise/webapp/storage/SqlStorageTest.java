@@ -9,6 +9,6 @@ import com.urise.webapp.storage.serialization.DataStreamSerialization;
 public class SqlStorageTest extends AbstractStorageTest {
 
     public SqlStorageTest() {
-        super(new SqlStorage(Config.get().getStorageDir()));
+        super(Config.get().getStorage());
     }
 }
